@@ -21,7 +21,8 @@ def swpca(dataset, catvar, k=0.05, trset=False):
     meanTr = X[trset==1,:].mean(axis=0)
     X = X - meanTr
     varTr = X[trset==1,:].var(axis=0)
-    X = X/varTr
+    varTr = np.maximum(varTr,1)
+    X = X/varTr # For security purposes
     if training:
         XNTEST = X[trset!=1,:]
     XNTRAIN = X[trset==1,:]
